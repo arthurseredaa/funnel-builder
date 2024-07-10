@@ -1,13 +1,15 @@
-import type { Metadata } from 'next';
-import { Inter as FontSans } from "next/font/google"
-import './globals.scss';
 import { ClerkProvider } from '@clerk/nextjs';
-import {cn} from "@/lib/utils";
+import type { Metadata } from 'next';
+import { Inter as FontSans } from 'next/font/google';
+
+import { cn } from '@/lib/utils';
+
+import './globals.scss';
 
 const fontSans = FontSans({
-  subsets: ["latin"],
-  variable: "--font-sans",
-})
+  subsets: ['latin'],
+  variable: '--font-sans',
+});
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -22,10 +24,12 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" className="dark">
-        <body className={cn(
-          "min-h-screen font-sans antialiased dark:bg-background dark:text-foreground",
-          fontSans.variable
-        )}>
+        <body
+          className={cn(
+            'min-h-screen font-sans antialiased dark:bg-background dark:text-foreground',
+            fontSans.variable,
+          )}
+        >
           {children}
         </body>
       </html>

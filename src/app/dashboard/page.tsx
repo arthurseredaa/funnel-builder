@@ -1,21 +1,20 @@
-import Header from "@/components/custom/Header";
-
-import FunnelDashboardDialog from "@/components/custom/FunnelDashboardDialog";
+import FunnelDashboardDialog from '@/components/custom/FunnelDashboardDialog';
+import Header from '@/components/custom/Header';
 
 const Page = () => {
   const createFunnel = async (funnelName: string) => {
-	'use server';
+    'use server';
 
-	console.log(funnelName);
-  }
+    console.log(funnelName);
+  };
 
   return (
-	<div>
-	  <Header/>
-	  <main className="pt-10 w-2/3 m-auto">
-		<FunnelDashboardDialog createFunnel={createFunnel} />
-	  </main>
-	</div>
+    <div>
+      <Header />
+      <main className="m-auto w-2/3 pt-10">
+        <FunnelDashboardDialog createFunnel={createFunnel} />
+      </main>
+    </div>
   );
 };
 
