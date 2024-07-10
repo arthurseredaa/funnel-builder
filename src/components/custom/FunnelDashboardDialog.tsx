@@ -26,7 +26,10 @@ const FunnelDashboardDialog: FC<Props> = ({ createFunnel }) => {
 	setFunnelName(e.target.value);
   }
 
-  const handleClick = (): void => createFunnel(funnelName);
+  const handleClick = (): void => {
+	createFunnel(funnelName);
+	setFunnelName("");
+  }
 
   return (
 	<AlertDialog>
