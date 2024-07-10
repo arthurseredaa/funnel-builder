@@ -7,7 +7,7 @@ export default function Home() {
 
   return (
 	<main className="flex min-h-screen flex-col items-center justify-between p-24">
-	  <h1 className="uppercase text-center">The progressive tool that let you <br/> generate more revenue</h1>
+	  <h1 className="uppercase text-center font-bold">The progressive tool that let you <br/> generate more revenue</h1>
 	  <Button asChild>
 		{
 		  userId ? (
