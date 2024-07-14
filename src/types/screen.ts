@@ -3,4 +3,5 @@ export type ScreenTypes =
   | 'multiple_choice'
   | 'divider'
   | 'input'
-  | 'single_select';
+  | 'single_select'
+  | 'default';

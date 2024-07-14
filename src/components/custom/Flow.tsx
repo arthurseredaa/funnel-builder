@@ -7,49 +7,53 @@ import {
   MiniMap,
   Panel,
   ReactFlow,
-  SelectionMode,
+  ReactFlowProvider,
   addEdge,
   applyEdgeChanges,
   applyNodeChanges,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import ScreenDrawer from '@/components/custom/ScreenDrawer';
-import { CustomEdgeType, edgeTypes, initialEdges } from '@/components/custom/edges';
-import { CustomNodeType, initialNodes, nodeTypes } from '@/components/custom/nodes';
+import { CustomEdgeType, edgeTypes } from '@/components/custom/edges';
+import { CustomNodeType } from '@/components/custom/nodes';
+import InputScreen from '@/components/custom/nodes/InputScreen';
 
 const Flow = () => {
-  const [screenName, setScreenName] = useState<string>('');
-  const [nodes, setNodes] = useState(initialNodes);
-  const [edges, setEdges] = useState(initialEdges);
+  const [nodes, setNodes] = useState([]);
+  const [edges, setEdges] = useState([]);
 
-  const addScreen = () => {
-    setNodes((nodes) => [
-      ...nodes,
-      {
-        id: screenName,
-        type: 'default',
-        data: { label: screenName },
-        position: { x: 250, y: 250 },
-      },
-    ]);
+  const addScreen = (type: string, title: string) => {
+    const newNode = {
+      id: crypto.randomUUID(),
+      type,
+      position: { y: 0, x: (nodes.length + 1) * 400 },
+      data: { label: title },
+    };
 
-    setScreenName('');
+    setNodes((nds) => [...nds, newNode]);
   };
 
   const onNodesChange = useCallback(
     (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
-    [setNodes],
+    [],
   );
   const onEdgesChange = useCallback(
     (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
-    [setEdges],
+    [],
   );
 
   const onConnect = useCallback(
-    (connection) => setEdges((eds) => addEdge(connection, eds)),
-    [setEdges],
+    (params) =>
+      setEdges((eds) => {
+        console.log({
+          params,
+          eds,
+        });
+        return addEdge(params, eds);
+      }),
+    [],
   );
 
   useEffect(() => {
@@ -61,37 +65,44 @@ const Flow = () => {
     switch (node.type) {
       case 'input':
         return '#6ede87';
-      case 'output':
-        return '#6865A5';
       default:
-        return '#ff0072';
+        return '#6865A5';
     }
   };
 
+  const nodeTypes = useMemo(
+    () => ({
+      input: InputScreen,
+    }),
+    [],
+  );
+
   return (
-    <ReactFlow<CustomNodeType, CustomEdgeType>
-      nodes={nodes}
-      edges={edges}
-      nodeTypes={nodeTypes}
-      edgeTypes={edgeTypes}
-      fitView
-      onNodesChange={onNodesChange}
-      onEdgesChange={onEdgesChange}
-      onConnect={onConnect}
-      defaultEdgeOptions={{ animated: true }}
-      panOnDrag={[1, 2]}
-      selectionMode={SelectionMode.Partial}
-      panOnScroll
-      selectionOnDrag
-    >
-      <Panel className="flex gap-1 text-primary">
-        <Separator orientation="vertical" />
-        <ScreenDrawer />
-      </Panel>
-      <Controls />
-      <Background />
-      <MiniMap nodeColor={nodeColor} nodeStrokeWidth={3} zoomable pannable />
-    </ReactFlow>
+    <ReactFlowProvider>
+      <ReactFlow<CustomNodeType, CustomEdgeType>
+        nodes={nodes}
+        edges={edges}
+        nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes}
+        fitView
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        onConnect={onConnect}
+        defaultEdgeOptions={{ animated: true }}
+        // panOnDrag={[1, 2]}
+        // selectionMode={SelectionMode.Partial}
+        // panOnScroll
+        // selectionOnDrag
+      >
+        <Panel className="flex gap-1 text-primary">
+          <Separator orientation="vertical" />
+          <ScreenDrawer addScreen={addScreen} />
+        </Panel>
+        <Controls />
+        <Background />
+        <MiniMap nodeColor={nodeColor} nodeStrokeWidth={3} zoomable pannable />
+      </ReactFlow>
+    </ReactFlowProvider>
   );
 };
 

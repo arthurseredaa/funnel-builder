@@ -67,7 +67,19 @@ body {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+.react-flow__node {
+  width: fit-content !important;
+  box-sizing: border-box !important;
+  background-color: transparent !important;
+  border: none !important;
+
+  & > * {
+    visibility: visible;
   }
 }

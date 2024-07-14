@@ -4,4 +4,5 @@ export type ScreenDrawerData = {
   type: ScreenTypes;
   title: string;
   description: string;
+  isAvailable?: boolean;
 };
