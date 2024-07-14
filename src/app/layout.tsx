@@ -4,7 +4,6 @@ import { Inter as FontSans } from 'next/font/google';
 import { FC, ReactNode } from 'react';
 
 import Header from '@/components/custom/Header';
-import { cn } from '@/lib/utils';
 
 import './globals.scss';
 
@@ -21,14 +20,9 @@ export const metadata: Metadata = {
 const RootLayout: FC<{ children: ReactNode }> = ({ children }) => (
   <ClerkProvider>
     <html lang="en" className="dark">
-      <body
-        className={cn(
-          'min-h-screen font-sans antialiased dark:bg-background dark:text-foreground',
-          fontSans.variable,
-        )}
-      >
+      <body className={fontSans.className}>
         <Header />
-        <main className="pt-[80px] m-auto w-2/3">{children}</main>
+        {children}
       </body>
     </html>
   </ClerkProvider>
