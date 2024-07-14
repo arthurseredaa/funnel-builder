@@ -20,9 +20,7 @@ const buttonStyle = {
   lineHeight: 1,
 };
 
-type ButtonEdgeData = {};
-
-export type ButtonEdge = Edge<ButtonEdgeData>;
+export type ButtonEdge = Edge;
 
 export default function ButtonEdge({
   id,
