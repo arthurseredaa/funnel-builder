@@ -1,47 +1,23 @@
 'use client';
 
+import { Separator } from '@radix-ui/react-separator';
 import {
   Background,
   Controls,
   MiniMap,
   Panel,
   ReactFlow,
+  SelectionMode,
   addEdge,
   applyEdgeChanges,
   applyNodeChanges,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-
-const initialNodes = [
-  {
-    id: '1',
-    type: 'input',
-    data: { label: 'Input Node' },
-    position: { x: 250, y: 25 },
-  },
-
-  {
-    id: '2',
-    // you can also pass a React component as a label
-    data: { label: <div>Default Node</div> },
-    position: { x: 100, y: 125 },
-  },
-  {
-    id: '3',
-    type: 'output',
-    data: { label: 'Output Node' },
-    position: { x: 250, y: 250 },
-  },
-];
-
-const initialEdges = [
-  { id: 'e1-2', source: '1', target: '2' },
-  { id: 'e2-3', source: '2', target: '3', animated: true },
-];
+import ScreenDrawer from '@/components/custom/ScreenDrawer';
+import { CustomEdgeType, edgeTypes, initialEdges } from '@/components/custom/edges';
+import { CustomNodeType, initialNodes, nodeTypes } from '@/components/custom/nodes';
 
 const Flow = () => {
   const [screenName, setScreenName] = useState<string>('');
@@ -60,15 +36,6 @@ const Flow = () => {
     ]);
 
     setScreenName('');
-  };
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    setScreenName(e.target.value);
-  };
-
-  const handleSubmit = (e: ChangeEvent<HTMLFormElement>): void => {
-    e.preventDefault();
-    addScreen();
   };
 
   const onNodesChange = useCallback(
@@ -102,24 +69,24 @@ const Flow = () => {
   };
 
   return (
-    <ReactFlow
+    <ReactFlow<CustomNodeType, CustomEdgeType>
       nodes={nodes}
       edges={edges}
+      nodeTypes={nodeTypes}
+      edgeTypes={edgeTypes}
       fitView
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
       onConnect={onConnect}
       defaultEdgeOptions={{ animated: true }}
-      // panOnDrag={[1, 2]}
-      // selectionMode={SelectionMode.Partial}
-      // panOnScroll
-      // selectionOnDrag
+      panOnDrag={[1, 2]}
+      selectionMode={SelectionMode.Partial}
+      panOnScroll
+      selectionOnDrag
     >
-      <Panel>
-        <form className="flex" onSubmit={handleSubmit}>
-          <Input placeholder="Enter screen name" className="text-primary" onChange={handleChange} />
-          <Button type="submit">Add</Button>
-        </form>
+      <Panel className="flex gap-1 text-primary">
+        <Separator orientation="vertical" />
+        <ScreenDrawer />
       </Panel>
       <Controls />
       <Background />
