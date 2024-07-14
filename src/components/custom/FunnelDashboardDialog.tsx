@@ -2,6 +2,7 @@
 
 import { AlertDialogTrigger } from '@radix-ui/react-alert-dialog';
 import { CirclePlus } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { ChangeEvent, FC, useState } from 'react';
 
 import {
@@ -17,19 +18,16 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
-type Props = {
-  createFunnel: (funnelName: string) => void;
-};
-
-const FunnelDashboardDialog: FC<Props> = ({ createFunnel }) => {
+const FunnelDashboardDialog: FC = () => {
   const [funnelName, setFunnelName] = useState<string>('');
+  const { push } = useRouter();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setFunnelName(e.target.value);
   };
 
   const handleClick = (): void => {
-    createFunnel(funnelName);
+    push(`/funnel/${funnelName}`);
     setFunnelName('');
   };
 

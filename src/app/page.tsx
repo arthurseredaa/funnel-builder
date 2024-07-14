@@ -8,7 +8,7 @@ export default function Home() {
   const { userId } = auth();
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="flex flex-col items-center justify-between p-24 min-h-[calc(100vh-80px)] box-border">
       <h1 className="text-center font-bold uppercase">
         The progressive tool that let you <br /> generate more revenue
       </h1>
