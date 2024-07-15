@@ -22,8 +22,8 @@ const InputScreen: FC<Props> = ({ data }) => {
         <Input placeholder="Placeholder text" className="nodrag" />
         <Input placeholder="Button text" className="nodrag" />
       </CardContent>
-      <Handle type="source" position={Position.Left} />
-      <Handle type="target" position={Position.Right} />
+      <Handle type="source" position={Position.Right} />
+      <Handle type="target" position={Position.Left} />
     </Card>
   );
 };

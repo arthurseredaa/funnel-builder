@@ -7,6 +7,8 @@ import Header from '@/components/custom/Header';
 
 import './globals.scss';
 
+export const runtime = 'edge';
+
 const fontSans = FontSans({
   subsets: ['latin'],
   variable: '--font-sans',
